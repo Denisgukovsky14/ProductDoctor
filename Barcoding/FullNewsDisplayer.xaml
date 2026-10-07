@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Barcoding.FullNewsDisplayer"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui" 
+             BackgroundColor="White"
+             xmlns:viewmodel="clr-namespace:Barcoding.ViewModels"
+             x:DataType="viewmodel:NewsPageViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="FullNewsDisplayer">
+
+    <Page.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="#00AD1C" StatusBarStyle="LightContent" />
+    </Page.Behaviors>
+
+    <ScrollView>
+        <VerticalStackLayout>
+        
+
+            <Grid ColumnDefinitions="20,*,20" Margin="13">
+            <Image HorizontalOptions="Start" VerticalOptions="Center">
+                <Image.Source>
+                    <FontImageSource
+                FontFamily="Icons"
+                Glyph="&#xE800;"
+                Size="20"
+                Color="{StaticResource Gray200}" />
+                </Image.Source>
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding BackToScannerCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
+
+            <Label
+                Text="Новости"
+                Grid.Column="1"
+                
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                FontFamily="RobotoReg"
+                TextColor="{StaticResource Gray200}"/>
+
+            <Image Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center">
+                <Image.Source>
+                    <FontImageSource
+                FontFamily="Icons"
+                Glyph="&#xE802;"
+                Size="20"
+                Color="{StaticResource Gray200}" />
+                </Image.Source>
+            </Image>
+        </Grid>
+
+        <Label
+            x:Name="NewsTitle"
+            Text="Какая - то новость"
+            HorizontalOptions="Center"
+            TextColor="#2C8B01"
+            Margin="20,12,12,12"
+            FontSize="21"
+            FontFamily="RobotoBold"
+            />
+
+        <Label
+            x:Name="NewsBlock"
+            LineHeight="1.24"
+            Text=" "
+            TextColor="Black"
+            Margin="20,20,0,0"
+            FontSize="16"
+            FontFamily="RobotoReg"
+            />
+        
+        
+
+        <Grid Margin="0,12,0,0" ColumnDefinitions=".50*,.50*" >
+
+            <Border Margin="13" Grid.Column="0"  Stroke="Transparent" >
+                <Border.StrokeShape>
+                    <RoundRectangle
+                    CornerRadius="15"/>
+                </Border.StrokeShape>
+
+                <Image
+                    x:Name="Image1"
+                    Source="zavod.jpeg"
+                />
+            </Border>
+
+            <Border Margin="13" Grid.Column="1"  Stroke="Transparent" >
+                <Border.StrokeShape>
+                    <RoundRectangle
+                    CornerRadius="15"/>
+                </Border.StrokeShape>
+
+                <Image
+                    x:Name="Image2"
+                    Source="experiment.jpeg"
+                />
+            </Border>
+
+
+
+        </Grid>
+
+        <Label
+            Text="предоставляемая информация извлекается исключительно из проверенных и надежных источников.*"
+            TextColor="#ffcc00"
+            Margin="20,12,12,12"
+            FontSize="14"
+            FontFamily="RobotoBold"
+        />
+
+        
+    </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

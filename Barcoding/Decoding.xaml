@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopups:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Barcoding.Decoding"
+             BackgroundColor="#80000000"
+             xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups">
+
+    <!--
+    <mopups:PopupPage.Resources>
+        <Style TargetType="Entry">
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="PlaceholderColor" Value="Gray" />
+            <Setter Property="BackgroundColor" Value="#F5F5F5" />
+            <Setter Property="FontFamily" Value="RobotoReg" />
+            <Setter Property="HeightRequest" Value="40" />
+            <Setter Property="Margin" Value="0,5,0,5" />
+        </Style>
+    </mopups:PopupPage.Resources>
+    -->
+    
+    <ScrollView
+        VerticalScrollBarVisibility="Never"
+        HorizontalScrollBarVisibility="Never">
+        <StackLayout
+             WidthRequest="300"
+             VerticalOptions="Center"
+             BackgroundColor="Transparent"
+             Spacing="10"
+             Padding="10">
+
+            <Frame
+                BorderColor="Transparent"
+                BackgroundColor="White"
+                Padding="15">
+
+                <StackLayout x:Name="MainStackLayout" Spacing="10">
+                    <!-- Заголовок -->
+                    <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto,Auto">
+
+                        <!-- Label теперь в первой колонке -->
+                        <Label Grid.Column="0"
+                               Grid.Row="0"
+           x:Name="DecodingName"
+           LineHeight="1.4"
+           FontFamily="RobotoReg"
+           FontSize="16"
+           TextColor="Black"
+           FontAttributes="Bold"
+           HorizontalOptions="Start"
+                               Margin="5,0,10,0"
+           VerticalOptions="Center" />
+
+                        <!-- Кнопка крестик во второй колонке (правый край) -->
+                        <Button Grid.Column="1"
+                                
+            Text="✕"
+            Clicked="Button_Clicked"
+            BackgroundColor="Transparent"
+            TextColor="Black"
+            FontSize="18"
+            WidthRequest="40"
+            HeightRequest="40"
+            Padding="0"
+            Margin="0"
+                                Grid.Row="0"
+            HorizontalOptions="End"
+            VerticalOptions="Start" />
+
+                        <Label
+                            Margin="5,10,0,0"
+                        Grid.ColumnSpan="2"
+                            Grid.Row="1"
+                        x:Name="DecodingDesc"
+                        TextColor="Black"
+                            LineHeight="1.4"
+FontFamily="RobotoReg"
+FontSize="16"
+                        >
+                        </Label>
+                    </Grid>
+                    
+
+                    <!-- Контейнер для динамического контента отзыва -->
+                    <StackLayout x:Name="ReviewContainer" 
+                                 IsVisible="False"
+                                 Margin="0,-20,0,0"
+                                 Spacing="15">
+
+                        <!-- Имя пользователя -->
+                        <Grid ColumnDefinitions="Auto, *" 
+                              ColumnSpacing="10"
+                              RowSpacing="5">
+                            <Label Text="Имя:"
+                                   VerticalOptions="Center"
+                                   FontFamily="RobotoReg"
+                                   
+                                   TextColor="Black"/>
+                            <Entry x:Name="UserNameEntry"
+                                   Placeholder="Ваше имя"
+                                   Grid.Column="1"
+                                   BackgroundColor="#F5F5F5"    
+                                   
+                                   TextColor="Black"/>
+                        </Grid>
+
+                        <!-- Заголовок отзыва -->
+                        <Grid ColumnDefinitions="Auto, *" 
+                              ColumnSpacing="10"
+                              RowSpacing="5">
+                            <Label Text="Заголовок:"
+                                   VerticalOptions="Center"
+                                   FontFamily="RobotoReg"
+                                   TextColor="Black"/>
+                            <Entry x:Name="ReviewTitleEntry"
+                                   Placeholder="Этот продукт..."
+                                   Grid.Column="1"
+                                   PlaceholderColor="#C8C8C8"
+                                   BackgroundColor="#F5F5F5"
+                                   TextColor="Black"/>
+                        </Grid>
+
+                        <!-- Текст отзыва -->
+                        <Grid RowDefinitions="Auto, *" 
+                              RowSpacing="5">
+                            <Label Text="Отзыв:"
+                                   FontFamily="RobotoReg"
+                                   TextColor="Black"/>
+                            <Editor x:Name="ReviewTextEditor"
+                                    Placeholder="Подробно опишите ваши впечатления..."
+                                    AutoSize="TextChanges"
+                                    MinimumHeightRequest="100"
+                                    BackgroundColor="#F5F5F5"
+                                    TextColor="Black"
+                                    Grid.Row="1"/>
+                        </Grid>
+
+                        <!-- Оценка -->
+                        <Grid ColumnDefinitions="Auto, *" 
+                              ColumnSpacing="10"
+                              RowSpacing="5">
+                            <Label Text="Оценка:"
+                                   VerticalOptions="Center"
+                                   FontFamily="RobotoReg"
+                                   TextColor="Black"/>
+                            <StackLayout Grid.Column="1" Spacing="5">
+                                <Slider x:Name="RatingSlider"
+                                        Minimum="0"
+                                        Maximum="5"
+                                        Value="3"
+                                        MinimumTrackColor="#00AD1C"
+                                        MaximumTrackColor="#E0E0E0"
+                                        ThumbColor="#00AD1C"/>
+                                <Label x:Name="RatingLabel"
+                                       Text="3/5"
+                                       FontSize="14"
+                                       TextColor="#00AD1C"
+                                       HorizontalOptions="Center"
+                                       FontAttributes="Bold"/>
+                            </StackLayout>
+                        </Grid>
+
+                        <!-- Кнопка отправки -->
+                        <Button x:Name="SubmitReviewButton"
+                                Text="Оставить отзыв"
+                                BackgroundColor="#00AD1C"
+                                TextColor="White"
+                                FontFamily="RobotoReg"
+                                CornerRadius="10"
+                                HeightRequest="45"
+                                Margin="0,10,0,0"
+                                Clicked="OnSubmitReviewClicked"/>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ScrollView>
+</mopups:PopupPage>

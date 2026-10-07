@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Barcoding.UserRatingPage"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             xmlns:viewmodel="clr-namespace:Barcoding.ViewModels"
+             x:DataType="viewmodel:UserRatingModel"
+             xmlns:model="clr-namespace:Barcoding.Models"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="White">
+
+    <ContentPage.Resources>
+        <viewmodel:UserRatingModel x:Key="ViewModel" />
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="60,*">
+        <Grid ColumnDefinitions="30,*,30" Margin="13">
+            <Image HorizontalOptions="Start" VerticalOptions="Center">
+                <Image.Source>
+                    <FontImageSource
+                        FontFamily="Icons"
+                        Glyph="&#xE800;"
+                        Size="24"
+                        Color="{StaticResource Gray200}" />
+                </Image.Source>
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding BackToScannerCommand}"/>
+                </Image.GestureRecognizers>
+            </Image>
+
+            <Label
+                Grid.Column="1"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Text="Отзывы потребителей"
+                TextColor="{StaticResource Gray200}" />
+
+            <Image Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center">
+                <Image.Source>
+                    <FontImageSource
+                        FontFamily="Icons"
+                        Glyph="&#xE802;"
+                        Size="24"
+                        Color="{StaticResource Gray200}" />
+                </Image.Source>
+            </Image>
+        </Grid>
+
+        <Grid Grid.Row="1" BackgroundColor="#2C8B01">
+            <CollectionView
+                ItemsSource="{Binding NewsList}"
+                SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:News">
+                        <StackLayout VerticalOptions="Start">
+                            <Frame
+                                VerticalOptions="Start"
+                                Margin="10"
+                                CornerRadius="15"
+                                BorderColor="Transparent"
+                                HasShadow="True">
+                                <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,*">
+                                    <!-- Источник -->
+                                    <Label Grid.Row="0" Grid.ColumnSpan="2"
+                                           FontSize="12"
+                                           Margin="10,10,0,0">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                              
+                                                <Span Text="{Binding Source}" TextColor="#B0B0B0" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <!-- Изображение (правая колонка) -->
+                                    <Border
+                                        
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        Grid.RowSpan="4"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="Start"
+                                        HeightRequest="65"
+                                        WidthRequest="65"
+                                        Stroke="Transparent"
+                                        BackgroundColor="LightGray"
+                                        Margin="10,10,0,10">
+
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="15"/>
+                                        </Border.StrokeShape>
+
+                                        <Image
+                                            Aspect="AspectFit"
+                                            HorizontalOptions="End"
+                                            Margin="0"
+                                            Source="user.png" />
+                                    </Border>
+
+                                    <!-- Заголовок новости -->
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        Margin="41,10,10,0"
+                                        LineBreakMode="TailTruncation"
+                                        MaxLines="2"
+                                        WidthRequest="160"
+                                        MinimumHeightRequest="45"
+                                        FontSize="15"
+                                        TextColor="Black"
+                                        Text="{Binding NewsName}" />
+
+                                    <!-- Дата -->
+                                    <Label
+                                        Grid.Row="2"
+                                        Grid.Column="0"
+                                        FontSize="13"
+                                        Margin="10,5,10,0"
+                                        FontFamily="RobotoReg"
+                                        Text="{Binding FormatedDate}"
+                                        TextColor="#00CD21" />
+
+                                    <Label
+                                        Grid.Row="2"
+                                        Grid.Column="5"
+                                        FontSize="13"
+                                        Margin="20,5,10,0"
+                                        FontFamily="RobotoReg"
+                                        Text="Оценка: ⭐⭐⭐★★ "
+                                        TextColor="Black" />
+
+                                    <!-- Текст новости (разворачиваемый) -->
+                                    <Label
+                x:Name="NewsContentLabel"
+                Grid.Row="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                                        WidthRequest="280"
+                Margin="15,10,10,15"
+                FontSize="13"
+                FontFamily="RobotoMed"
+                TextColor="#B0B0B0"
+                LineBreakMode="WordWrap">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" 
+                                 Binding="{Binding IsExpanded, Source={RelativeSource AncestorType={x:Type StackLayout}}}"
+                                 Value="False">
+                                                <Setter Property="MaxLines" Value="3" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" 
+                                 Binding="{Binding IsExpanded, Source={RelativeSource AncestorType={x:Type StackLayout}}}"
+                                 Value="True">
+                                                <Setter Property="MaxLines" Value="0" />
+                                                <!-- 0 = без ограничений -->
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer 
+                        Command="{Binding ToggleExpandCommand, Source={RelativeSource AncestorType={x:Type StackLayout}}}"/>
+                                        </Label.GestureRecognizers>
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="{}{0}">
+                                                <Binding Path="FormatedFullNews" />
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                </Grid>
+                            </Frame>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </Grid>
+
+    <Page.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="#00AD1C" StatusBarStyle="LightContent" x:Name="StatusBar" />
+    </Page.Behaviors>
+
+</ContentPage>

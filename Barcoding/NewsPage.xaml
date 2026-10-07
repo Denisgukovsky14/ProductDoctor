@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Barcoding.NewsPage"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             xmlns:viewmodel="clr-namespace:Barcoding.ViewModels"
+             x:DataType="viewmodel:NewsPageViewModel"
+             xmlns:model="clr-namespace:Barcoding.Models"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="White">
+
+
+
+    <Grid RowDefinitions="60,*">
+
+        <Grid ColumnDefinitions="30,*,30" Margin="13">
+            <Image HorizontalOptions="Start" VerticalOptions="Center">
+                <Image.Source>
+                    <FontImageSource
+                FontFamily="Icons"
+                Glyph="&#xE800;"
+                Size="24"
+                Color="{StaticResource Gray200}" />
+                </Image.Source>
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding BackToScannerCommand}"/>
+                </Image.GestureRecognizers>
+            </Image>
+
+            <Label
+                Grid.Column="1"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Text="Новости"
+                TextColor="{StaticResource Gray200}"
+                />
+
+            <Image Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center">
+                <Image.Source>
+                    <FontImageSource
+                FontFamily="Icons"
+                Glyph="&#xE802;"
+                Size="24"
+                Color="{StaticResource Gray200}" />
+                </Image.Source>
+            </Image>
+        </Grid>
+
+        <Grid Grid.Row="1" BackgroundColor="#2C8B01">
+
+            <CollectionView
+                
+                ItemsSource="{Binding NewsList }"
+                SelectionMode="None">
+                <CollectionView.ItemTemplate>
+
+
+
+                    <DataTemplate
+            x:DataType="model:News">
+                        <StackLayout 
+                
+                VerticalOptions="Center">
+
+                            <Frame
+                VerticalOptions="Start"
+                Margin="8"
+                CornerRadius="15"
+                BorderColor="Transparent"          
+                HeightRequest="240">
+                                <Grid ColumnDefinitions=".30*,.40*,.30*" RowDefinitions=".10*,.30*,.10*,.50*" >
+
+                                    <Border
+                        Grid.ColumnSpan="3"
+                        Grid.Row="0"
+                        HorizontalOptions="End"
+                        Margin="0,80,0,0"
+                        HeightRequest="100"
+                        WidthRequest="100"
+                        Stroke="Transparent"
+                        BackgroundColor="Gray">
+
+                                        <Border.StrokeShape>
+                                            <RoundRectangle
+                                CornerRadius="15"/>
+                                        </Border.StrokeShape>
+
+                                        <Image
+                            Aspect="AspectFill"
+                            Source="chell.jpg"
+                            />
+
+                                    </Border>
+
+                                    <Label Grid.RowSpan="0" Grid.ColumnSpan="2"
+                           FontSize="13">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Источник: " TextColor="#B0B0B0" />
+                                                <Span Text="{Binding Source}" TextColor="#B0B0B0" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <Label
+                        Margin="0,5,10,0"
+                                        
+                        LineBreakMode="TailTruncation"
+                        MaxLines="2"
+                                        
+                        FontSize="16"
+                        Grid.Row="1" Grid.ColumnSpan="2"
+                        TextColor="Black"
+                        Text="{Binding NewsName}"/>
+
+                                    <Label
+                        Grid.Row="2" Grid.ColumnSpan="2"
+                        FontSize="12"
+                        Margin="0,3,17,0"
+                        HorizontalOptions="Start"
+                        FontFamily="RobotoReg"
+                                        
+                        Text="{Binding FormatedDate}"
+                        TextColor="#00CD21"
+                        />
+
+                                    <Button
+                        Margin="0,0,8,0"
+                        Grid.Row="3" 
+                        BorderColor="#B0B0B0"
+                        BorderWidth="2"
+                        BackgroundColor="Transparent"
+                        Text="Читать"
+                        TextColor="#00CD21"
+                        FontSize="14"
+                        FontFamily="RobotoBold"
+                        VerticalOptions="End"
+                        Grid.Column="3"
+                        HeightRequest="45"
+                        CornerRadius="15"
+                        WidthRequest="90"
+                        
+                        CommandParameter="{Binding Id}"
+                        Clicked="OnNavigateButtonClicked"
+                        
+                        
+                        />
+
+                                    <Label
+                        FontSize="13"
+                        Grid.Row="4" Grid.ColumnSpan="2"
+                        FontFamily="RobotoMed"
+                        TextColor="#B0B0B0"
+                        MinimumWidthRequest="100"
+                        MaximumWidthRequest="200"
+                        VerticalOptions="End"
+                                        
+                        LineBreakMode="TailTruncation"
+                        MaxLines="4"
+                                        
+                        HorizontalOptions="Start"
+                        HorizontalTextAlignment="Start"
+                        Text="{Binding FormatedFullNews}"
+                        />
+                                </Grid>
+                            </Frame>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </Grid>
+
+
+
+
+    </Grid>
+
+    <Page.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="#00AD1C" StatusBarStyle="LightContent" x:Name="StatusBar" />
+    </Page.Behaviors>
+
+</ContentPage>

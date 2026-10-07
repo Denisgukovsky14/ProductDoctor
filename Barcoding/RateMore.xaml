@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Barcoding.RateMore"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui" 
+             xmlns:viewmodel="clr-namespace:Barcoding.ViewModels"
+             x:DataType="viewmodel:NewsViewModel"
+             BackgroundColor="White"
+             Shell.NavBarIsVisible="False"
+             xmlns:model="clr-namespace:Barcoding.Models"
+             Title="RateMore">
+
+    <Page.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="#00AD1C" StatusBarStyle="LightContent" />
+    </Page.Behaviors>
+
+    <Grid RowDefinitions="46,*" >
+        <VerticalStackLayout >
+            <Grid BackgroundColor="White">
+                <Grid Margin="13" ColumnDefinitions="30,*,30" >
+                    <Image HorizontalOptions="Start" VerticalOptions="Center">
+                        <Image.Source>
+                            <FontImageSource          
+                        FontFamily="Icons"
+                        Glyph="&#xE800;"
+                        Size="24"
+                        Color="{StaticResource Gray200}" />
+                        </Image.Source>
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding GoBackCommand }"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+
+                    <Label
+            Text="Рейтинг"
+            Grid.Column="1"    
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            
+            TextColor="{StaticResource Gray200}"/>
+
+                    <Image Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center">
+                        <Image.Source>
+                            <FontImageSource
+                        FontFamily="Icons"
+                        Glyph="&#xE802;"
+                        Size="24"
+                        Color="{StaticResource Gray200}" />
+                        </Image.Source>
+                    </Image>
+                </Grid>
+            </Grid>
+        </VerticalStackLayout>
+
+        <ScrollView Grid.Row="1" Orientation="Vertical">
+            <Grid RowDefinitions="800" >
+                <VerticalStackLayout Margin="0,10,0,0" Grid.Row="1" >
+
+                    <Label
+            Text="Почему такой рейтинг ?"
+            TextColor="#2C8B01"
+            HorizontalOptions="Center"
+            Margin="20,12,12,8"
+            FontSize="21"
+            FontFamily="RobotoBold"
+            />
+
+
+                    <Label LineHeight="1.24"
+            Text="{Binding Wtm1}"
+            TextColor="Black"
+            Margin="20,20,20,0"
+            FontSize="16"
+            FontFamily="RobotoReg"
+            />
+
+               
+
+                    <Label
+            LineHeight="1.24"
+            TextColor="Black"
+            Margin="20,20,20,0"
+            FontSize="16"
+            FontFamily="RobotoReg"
+            Text="{Binding Wtm2}"
+        />
+
+                    <Label
+            Text="Рекомендуем также рассмотреть !"
+            HorizontalOptions="Center"
+            TextColor="#C20600"
+            Margin="20,20,12,12"
+            FontSize="21"
+            FontFamily="RobotoBold">
+
+                        <Label.Shadow>
+                            <Shadow Brush="#FF6B6B" 
+                Opacity="0.5" 
+                Offset="0,2" 
+                Radius="4" />
+                        </Label.Shadow>
+
+                    </Label>
+
+                    <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never" >
+                        <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
+                            <CollectionView ItemsSource="{Binding Items}" 
+                                            HorizontalScrollBarVisibility="Never">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="model:Rating">
+                                        <!-- ИЗМЕНЕНИЕ НАЧАЛО: Полностью переделан Grid -->
+                                        <Grid Margin="15,30,15,15">
+                                            <!-- Основное изображение -->
+                                            <Border HeightRequest="150" Stroke="Transparent" >
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle Aspect="Fill" CornerRadius="15"/>
+                                                </Border.StrokeShape>
+                                                <Image Source="{Binding Image1Path}"/>
+                                            </Border>
+
+                                            <!-- Контейнер для желтого и зеленого блоков -->
+                                            <Grid ColumnDefinitions="160,70" 
+                                                  HorizontalOptions="Start"
+                                                  VerticalOptions="End">
+
+                                                <!-- Желтый блок -->
+                                                <Border Grid.Column="0"
+                                                    Stroke="Transparent"
+                                                    BackgroundColor="#ffcc00"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Margin="0,0,0,0"    
+                                                    HeightRequest="55">
+                                                    <Border.StrokeShape>
+                                                        <RoundRectangle CornerRadius="0,0,14,0"/>
+                                                    </Border.StrokeShape>
+                                                    <Label FontSize="13" Margin="7,3,0,0" Text="{Binding WhyThisMark}"
+                                                           TextColor="White"
+                                                           
+                                                           MaxLines="2"/>
+                                                </Border>
+
+                                                <!-- Зеленый блок -->
+                                                <Border Grid.Column="1"
+                                                    Stroke="Transparent"
+                                                    BackgroundColor="#2C8B01"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Margin="-2,0,0,0"
+                                                    HeightRequest="55">
+                                                    <Border.StrokeShape>
+                                                        <RoundRectangle CornerRadius="0,0,0,15"/>
+                                                    </Border.StrokeShape>
+                                                    <Grid>
+                                                        <Label TextColor="{StaticResource Gray200}" 
+                                                               HorizontalOptions="Center" 
+                                                               VerticalOptions="Center"  
+                                                               FontSize="27" 
+                                                               Margin="2,2,0,0" 
+                                                               Text="{Binding ProductRating}"/>
+                                                        <Label TextColor="White" 
+                                                               HorizontalOptions="Center" 
+                                                               VerticalOptions="Center"  
+                                                               FontSize="27" 
+                                                               Margin="5" 
+                                                               Text="{Binding ProductRating}"/>
+                                                    </Grid>
+                                                </Border>
+                                            </Grid>
+                                        </Grid>
+                                        <!-- ИЗМЕНЕНИЕ КОНЕЦ -->
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Horizontal" />
+                                </CollectionView.ItemsLayout>
+                            </CollectionView>
+                        </HorizontalStackLayout>
+                    </ScrollView>
+                </VerticalStackLayout>
+            </Grid>
+        </ScrollView>
+    </Grid>
+</ContentPage>

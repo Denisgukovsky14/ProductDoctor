@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Barcoding.BasicLoadPage"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             Shell.NavBarIsVisible="False"
+             Background="#00AD1C"
+             Title="BasicLoadPage">
+    <Grid RowDefinitions="*">
+        <Label 
+            TextColor="White"
+            Text="Ищем товар..."
+            FontSize="30"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+    </Grid>
+    
+    <Page.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="#00AD1C" StatusBarStyle="LightContent" x:Name="StatusBar" />
+    </Page.Behaviors>
+
+</ContentPage>

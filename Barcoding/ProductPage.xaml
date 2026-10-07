@@ -1,0 +1,496 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Barcoding.ProductPage"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui" 
+             xmlns:viewmodel="clr-namespace:Barcoding.ViewModels"
+             x:DataType="viewmodel:ProductViewModel"
+             BackgroundColor="#2C8B01"
+             Shell.NavBarIsVisible="False"
+             xmlns:model="clr-namespace:Barcoding.Models"
+             xmlns:local="clr-namespace:Barcoding" 
+             Title="ProductPage">
+
+
+    <ContentPage.Resources>
+        <!-- Шаблон для ингредиента (цветной, кликабельный) -->
+        <DataTemplate x:Key="IngredientTemplate" x:DataType="model:Ingridients">
+            <Frame Padding="5"
+               BackgroundColor="Transparent"
+               BorderColor="Transparent">
+                <Label Text="{Binding Name}"
+                   TextColor="{Binding Color}"
+                   FontFamily="RobotoMed"
+                   Margin="0,0,-4,0"
+                   
+                   FontSize="17">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer 
+                        Tapped="IngInfo"
+                        CommandParameter="{Binding .}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </Frame>
+        </DataTemplate>
+
+        <!-- Шаблон для запятой (серая, не кликабельная) -->
+        <DataTemplate x:Key="SeparatorTemplate">
+            <Label Text=","
+               TextColor="LightGray"
+                   BackgroundColor="Transparent"
+               FontSize="17"
+                   
+               VerticalOptions="Center"
+               Margin="0,0,0,0"/>
+        </DataTemplate>
+
+        <!-- Селектор шаблонов -->
+        <local:IngredientTemplateSelector x:Key="IngredientSelector"
+                                       IngredientTemplate="{StaticResource IngredientTemplate}"
+                                       SeparatorTemplate="{StaticResource SeparatorTemplate}"/>
+    </ContentPage.Resources>
+
+
+    <Page.Behaviors>
+            <mct:StatusBarBehavior StatusBarColor="#00AD1C" StatusBarStyle="LightContent" />
+        </Page.Behaviors>
+    <Grid RowDefinitions="55, *">
+        
+
+        
+        
+
+       
+        <Frame Grid.Row="0"
+               BackgroundColor="White"
+               CornerRadius="0"
+               BorderColor="White"
+               HeightRequest="55"
+               VerticalOptions="Start"
+               Padding="0"
+               Margin="0">
+
+            <!-- Твоя панель с кнопками -->
+            <Grid ColumnDefinitions="30,*,30" Margin="13">
+                <Image HorizontalOptions="Start" VerticalOptions="Center">
+                    <Image.Source>
+                        <FontImageSource
+                            FontFamily="Icons"
+                            Glyph="&#xE800;"
+                            Size="24"
+                            Color="{StaticResource Gray200}" />
+                    </Image.Source>
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding BackToScannerCommand }"/>
+                    </Image.GestureRecognizers>
+                </Image>
+
+                <Label
+                    Text="Мой продукт"
+                    FontFamily="RobotoMed"
+                    Grid.Column="1"
+                    FontSize="17"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    TextColor="Gray"/>
+
+                <Image Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center">
+                    <Image.Source>
+                        <FontImageSource
+                            FontFamily="Icons"
+                            Glyph="&#xE802;"
+                            Size="24"
+                            Color="{StaticResource Gray200}" />
+                    </Image.Source>
+                </Image>
+            </Grid>
+        </Frame>
+
+        <!-- 2. ВЕСЬ ОСТАЛЬНОЙ КОНТЕНТ (скроллится) -->
+        <ScrollView Grid.Row="1" 
+                    VerticalScrollBarVisibility="Never" 
+                    HorizontalScrollBarVisibility="Never">
+
+            <!-- Убрал первую строку 55, так как она теперь в фиксированной панели -->
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+
+                <!--
+                <Image 
+                    Grid.Row="0"
+                    Source="greenbg.png"
+                    Aspect="AspectFill"
+                    />
+                -->
+
+                <!-- Вот здесь должен быть фрагмент кода, отвечающий за П.Ценность -->
+
+                <Grid Grid.Row="0" Margin="20">
+                    <!-- Изменил на Row="0" -->
+                    <Border
+                           Stroke="Transparent"
+                           Margin="0,10,0,0"
+                           BackgroundColor ="#F5EEF5"
+                           HeightRequest="290"
+                           WidthRequest="300"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle
+                                CornerRadius="20,20,20,20"/>
+                        </Border.StrokeShape>
+
+                        <Image Source="{Binding Imagecode}"
+                               Aspect="Fill" 
+                               VerticalOptions="Fill"
+                               HorizontalOptions="Fill">
+                        </Image>
+                    </Border>
+
+                    <Grid RowDefinitions="320,Auto,Auto,Auto,Auto">
+                        <Label Grid.Row="1"
+                           FontSize="18"
+                           Margin="0,5,0,7"
+                           Text="{Binding Title}"
+                           FontFamily="RobotoBold"
+                           HorizontalTextAlignment="Center"
+                           HorizontalOptions="Center"
+                           TextColor="White"
+                           MaxLines="2"/>
+
+                        <RoundRectangle Grid.Row="2"
+                                        BackgroundColor="White"
+                                        WidthRequest="300"
+                                        HeightRequest="3"
+                                        CornerRadius="100"
+                                        Margin="5"/>
+
+                        <Label Grid.Row="3"
+                            FontSize="16"
+                            Margin="0,5,0,0"
+                            Text="{Binding Manrer}"
+                            MaxLines="2"
+                            FontFamily="RobotoReg"
+                            HorizontalTextAlignment="Center"
+                            TextColor="White"
+                            HorizontalOptions="Center"/>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="1" Margin="-1,5,-1,-10">
+                    <!-- Изменил на Row="1" -->
+                    <Frame Margin="0,0,0,0"
+                           CornerRadius="15"
+                           BorderColor="Transparent" />
+
+                    <Grid RowDefinitions=".25*,Auto,.25*,.75*" Margin="0,10,0,0">
+                        <Grid Grid.Row="0" ColumnDefinitions="130,*,25" Margin="0,0,30,10">
+                            <Label
+                                Grid.Column="1"
+                                HorizontalOptions="End"
+                                VerticalOptions="Center"
+                                FontFamily="RobotoMed"
+                                FontSize="19"
+                                WidthRequest="200"
+                                Margin="0,0,10,0"
+                                Text="Состав товара:"
+                                TextColor="Gray">
+                            </Label>
+
+                            <Image Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center"
+                                   Grid.Row="0"
+                                   BackgroundColor="Transparent">
+                                <Image.Source>
+                                    <FontImageSource
+                                        FontFamily="Icons"
+                                        Glyph="&#xF086;"
+                                        Size="25"
+
+                                        Color="#ffcc00" />
+                                </Image.Source>
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Tapped="LookInfo" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Grid>
+
+                        <Frame Grid.Row="1"
+                               
+       BorderColor="Black"
+       Margin="10,20,10,10"
+       Padding="3">
+                            <ScrollView>
+                                <FlexLayout Wrap="Wrap"
+                    Direction="Row"
+                    JustifyContent="Start"
+                    AlignItems="Center"
+                    Margin="5"
+                    BindableLayout.ItemsSource="{Binding DisplayItems}"
+                    BindableLayout.ItemTemplateSelector="{StaticResource IngredientSelector}"/>
+                            </ScrollView>
+                        </Frame>
+
+                        <Grid Grid.Row="2" Margin="0,0,0,0" ColumnDefinitions="*,*,*">
+                            <Label
+                                Grid.Column="0"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Center"
+                                FontFamily="RobotoMed"
+                                FontSize="19"
+                                WidthRequest="400"
+                                Text="Пищевая ценность:"
+                                Margin="20,0,0,0"
+                                TextColor="Gray"/>
+
+                            <Label
+                                Margin="11,0,0,0"
+                                Grid.Column="2"
+                                HorizontalOptions="Center"
+                                Text="(на 100 г/гп)"
+                                TextColor="#ffcc00"
+                                FontFamily="RobotoMed"
+                                FontSize="11"
+                                HorizontalTextAlignment="Start"
+                                VerticalOptions="Center"/>
+                        </Grid>
+
+                        <Grid Grid.Row="3" HeightRequest="90" VerticalOptions="Start">
+                            <Border
+                                Stroke="Transparent"
+                                BackgroundColor="Transparent"
+                                Margin="0,0,0,25">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="5,5,5,5"/>
+                                </Border.StrokeShape>
+
+                                <Grid RowDefinitions="*" ColumnDefinitions=".45*,.45*,.45*,.45*">
+                                    <Button
+                                        Grid.Row="0"
+                                        Grid.Column="0"                                  
+                                        Text="{Binding Proteins}"
+                                        BackgroundColor="White"
+                                        BorderColor="#ffcc00"
+                                        FontFamily="RobotoBold"
+                                        BorderWidth="2"
+                                        Padding="-5"
+                                        CornerRadius="10"
+                                        WidthRequest="90"
+                                        HeightRequest="35"
+                                        FontSize="11"
+                                        TextColor="Black"
+                                        Margin="0,0,0,0"/>
+
+                                    <Button
+                                        Grid.Row="0"
+                                        Grid.Column="1"                                  
+                                        Text="{Binding Fats}"
+                                        BackgroundColor="White"
+                                        BorderColor="MidnightBlue"
+                                        FontFamily="RobotoBold"
+                                        BorderWidth="2"
+                                        CornerRadius="10"
+                                        Padding="-5"
+                                        WidthRequest="90"
+                                        HeightRequest="35"
+                                        FontSize="11"
+                                        TextColor="Black"
+                                        Margin="0,0,0,0"/>
+
+                                    <Button
+                                        Grid.Row="0"
+                                        Grid.Column="2"                                  
+                                        Text="{Binding Carbohydrates}"
+                                        BackgroundColor="White"
+                                        BorderColor="#5e8720"
+                                        FontFamily="RobotoBold"
+                                        BorderWidth="2"
+                                        CornerRadius="10"
+                                        Padding="-5"
+                                        WidthRequest="90"
+                                        HeightRequest="35"
+                                        FontSize="8"
+                                        TextColor="Black"
+                                        Margin="0,0,0,0"/>
+
+                                    <Button
+                                        Grid.Row="0"
+                                        Grid.Column="3"                                  
+                                        Text="{Binding Kilocalories}"
+                                        BackgroundColor="White"
+                                        BorderColor="Red"
+                                        FontFamily="RobotoBold"
+                                        BorderWidth="2"
+                                        CornerRadius="10"
+                                        Padding="-5"
+                                        WidthRequest="90"
+                                        HeightRequest="35"
+                                        FontSize="8"
+                                        TextColor="Black"
+                                        Margin="0,0,0,0"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="2" Margin="0,15,0,0" ColumnDefinitions=".60*,.20*,.10*">
+                    <Label Grid.Column="0"
+                           VerticalOptions="Center"
+                           FontFamily="RobotoMed"
+                           Margin="20,0,10,0"
+                           FontSize="14"
+                           VerticalTextAlignment="Center"
+                           HeightRequest="100"
+                           TextColor="White"
+                           Text="Рейтинг товара по 5-балльной системе от «РОСКАЧЕСТВО»:"/>
+
+                    <Frame Margin="0,0,-10,0"
+                           BorderColor="Transparent"
+                           Grid.ColumnSpan="2"
+                           HorizontalOptions="End"
+                           VerticalOptions="Center"
+                           HeightRequest="50"
+                           WidthRequest="80"
+                           CornerRadius="20"
+                           Background="#C5A525">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding MoreRateCommand }"/>
+                        </Frame.GestureRecognizers>
+
+                        <Label
+                            HorizontalOptions="End"
+                            Text="?"
+                            InputTransparent="True"
+                            FontFamily="RobotoBold"
+                            FontSize="23"
+                            Margin="0,20,-5,8"
+                            HeightRequest="50"
+                            TextColor="White"/>
+                    </Frame>
+
+                    <Border Grid.Column="1"
+                            HorizontalOptions="Start"
+                            Stroke="Transparent"
+                            HeightRequest="70"
+                            WidthRequest="70"
+                            Margin="-15,0,0,0"
+                            BackgroundColor="White">
+                        <Border.Shadow>
+                            <Shadow Radius="35" Brush="Black" Opacity="0.5" Offset="3,0"/>
+                        </Border.Shadow>
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20,20,20,20"/>
+                        </Border.StrokeShape>
+
+                        <Grid>
+                            <Label
+                                
+                                Text="{Binding Rate}"
+                                FontSize="36"
+                                TextColor="#C5A525"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"/>
+
+                            <Label
+                                Margin="2,2,0,0"
+                                Text="{Binding Rate}"
+                                FontSize="36"
+                                TextColor="#ffcc00"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <Grid Grid.Row="3" Margin="0,15,0,0" ColumnDefinitions=".60*,.20*,.10*">
+                    <Label Grid.Column="0"
+                           VerticalOptions="Center"
+                           FontFamily="RobotoMed"
+                           Margin="20,0,10,0"
+                           FontSize="14"
+                           VerticalTextAlignment="Center"
+                           HeightRequest="100"
+                           TextColor="White"
+                           Text="Пользовательский рейтинг товара по 5-балльной системе:"/>
+
+                    <Frame Margin="0,0,-10,0"
+                           BorderColor="Transparent"
+                           Grid.ColumnSpan="2"
+                           HorizontalOptions="End"
+                           VerticalOptions="Center"
+                           HeightRequest="50"
+                           WidthRequest="80"
+                           CornerRadius="20"
+                           Background="#C5A525">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer CommandParameter="{Binding Id}" Command="{Binding LoadUserRatingsCommand}"/>
+                        </Frame.GestureRecognizers>
+
+                        <Label
+                            HorizontalOptions="End"
+                            Text="?"
+                            InputTransparent="True"
+                            FontFamily="RobotoBold"
+                            FontSize="23"
+                            Margin="0,20,-5,8"
+                            HeightRequest="50"
+                            TextColor="White"/>
+                    </Frame>
+
+                    <Border Grid.Column="1"
+                            HorizontalOptions="Start"
+                            Stroke="Transparent"
+                            HeightRequest="70"
+                            WidthRequest="70"
+                            Margin="-15,0,0,0"
+                            BackgroundColor="White">
+                        <Border.Shadow>
+                            <Shadow Radius="35" Brush="Black" Opacity="0.5" Offset="3,0"/>
+                        </Border.Shadow>
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20,20,20,20"/>
+                        </Border.StrokeShape>
+
+                        <Grid>
+                            <Label
+                                Text="{Binding Rate}"
+                                FontSize="36"
+                                TextColor="#C5A525"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"/>
+
+                            <Label
+                                Margin="2,2,0,0"
+                                Text="{Binding Rate}"
+                                FontSize="36"
+                                TextColor="#ffcc00"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <Grid Grid.Row="4">
+                    <!--
+                    <Button
+                        x:Name="reviewButton"
+                        Text="Оставить отзыв о продукте"
+                        TextColor="Black"
+                        BackgroundColor="White"
+                        BorderColor="#ffcc00"
+                        FontFamily="RobotoBold"
+                        BorderWidth="2"
+                        CornerRadius="10"
+                        Padding="-5"
+                        WidthRequest="255"
+                        HeightRequest="45"
+                        FontSize="13"
+                        CommandParameter="{Binding Id}"
+                        Clicked="LookInfo"
+                        Margin="20,20,20,20"/>
+                    -->
+                </Grid>
+            </Grid>
+        </ScrollView>
+    </Grid>
+</ContentPage>
